@@ -114,11 +114,20 @@ func (c *QuotesMockClientV1) composeFilter(filter *data.FilterParams) func(*Quot
 		if statusOk && item.Status != status {
 			return false
 		}
-		if len(tags) > 0 && !c.contains(item.AllTags, tags) {
+		if len(tags) > 0 && !arrayContains(item.AllTags, tags) {
 			return false
 		}
 		return true
 	}
+}
+
+func arrayContains[T comparable](s []T, e T) bool {
+	for _, v := range s {
+		if v == e {
+			return true
+		}
+	}
+	return false
 }
 
 func (c *QuotesMockClientV1) GetQuotes(ctx context.Context, correlationId string, filter *data.FilterParams, paging *data.PagingParams) (data.DataPage[*QuoteV1], error) {
