@@ -114,7 +114,7 @@ func (c *QuotesMockClientV1) composeFilter(filter *data.FilterParams) func(*Quot
 		if statusOk && item.Status != status {
 			return false
 		}
-		if len(tags) > 0 && !arrayContains(item.AllTags, tags) {
+		if len(tags) > 0 && !c.contains(item.AllTags, tags) {
 			return false
 		}
 		return true
